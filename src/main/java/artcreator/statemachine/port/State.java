@@ -12,10 +12,16 @@ public interface State {
 
 	public enum S implements State {
 
-		CREATE_TEMPLATE //
+		CREATE_TEMPLATE, //
 
 		/* more states */
-		
+		SELECT_TEMPLATE,
+		EDIT_TEMPLATE,
+		SELECT_COLOR_PALETTE,
+		GENERATE_TEMPLATE,
+		GENERATE_PREVIEW,
+		SAVE_TEMPLATE,
+		ERROR_STATE
 		;
 
 		private List<State> subStates;

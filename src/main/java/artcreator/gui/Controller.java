@@ -2,6 +2,7 @@ package artcreator.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.concurrent.CompletableFuture;
 
 import javax.swing.JButton;
@@ -26,6 +27,8 @@ public class Controller implements ActionListener, Observer {
     private Template previewTemplate;
     private TemplateConfig templateConfig;
     private ColorConfig colorConfig;
+
+    private File image;
 
     public Controller(CreatorFrame view, Subject subject, Creator model) {
         this.myView = view;
