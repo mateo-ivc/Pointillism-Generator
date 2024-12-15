@@ -45,6 +45,7 @@ public class Controller implements ActionListener, Observer {
         this.myModel = model;
         this.subject = subject;
         this.subject.attach(this);
+        this.templateConfig = new TemplateConfig();
     }
 
     public synchronized void actionPerformed(ActionEvent e) {
@@ -114,12 +115,14 @@ public class Controller implements ActionListener, Observer {
 
     }
 
-    public void validatePinSize() {
-
+    public void validatePinSize(String value) {
+        float f = Float.parseFloat(value);
+        this.templateConfig.setPinDiameter(f);
     }
 
-    public void validatePinDistance() {
-
+    public void validatePinDistance(String value) {
+        float f = Float.parseFloat(value);
+        this.templateConfig.setPinDistance(f);
     }
 
     public void loadConfigFromFile() {
@@ -140,6 +143,10 @@ public class Controller implements ActionListener, Observer {
 
     public void saveColorPalette() {
 
+    }
+
+    public TemplateConfig getTemplateConfig(){
+        return templateConfig;
     }
 
 }
