@@ -2,6 +2,7 @@ package artcreator.gui;
 
 import artcreator.creator.CreatorFactory;
 import artcreator.creator.port.Creator;
+import artcreator.gui.panels.CheckImagePanel;
 import artcreator.gui.panels.EditorPanel;
 import artcreator.gui.panels.ImagePanel;
 import artcreator.statemachine.StateMachineFactory;
@@ -49,7 +50,6 @@ public class CreatorFrame extends JFrame implements Observer {
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
         mainPanel.add(selectImagePanel(), "selectImagePanel");
-        mainPanel.add(new EditorPanel(this.controller), "parameterPanel");
     }
 
     @Override
@@ -60,15 +60,14 @@ public class CreatorFrame extends JFrame implements Observer {
                 cardLayout.show(mainPanel, "selectImagePanel");
                 break;
             case State.S.EDIT_PARAMETERS:
+                mainPanel.removeAll();
+                mainPanel.add(new EditorPanel(this.controller), "parameterPanel");
                 cardLayout.show(mainPanel, "parameterPanel");
-
-                if (this.controller.getImage() != null) {
-                    //n=1 because it's the second panel getting added
-                    JPanel editParameterPanel = (JPanel) mainPanel.getComponent(1);
-
-                    ImagePanel imagePanel = (ImagePanel) editParameterPanel.getComponent(0);
-                    imagePanel.setImage(this.controller.getImage());
-                }
+                break;
+            case State.S.CHECK_IMAGE:
+                mainPanel.removeAll();
+                mainPanel.add(new CheckImagePanel(this.controller), "checkImagePanel");
+                cardLayout.show(mainPanel, "checkImagePanel");
                 break;
             default:
                 throw new IllegalStateException("Unknown state: " + currentState);

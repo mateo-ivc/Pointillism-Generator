@@ -64,6 +64,9 @@ public class Controller implements ActionListener, Observer {
             case "SaveConfig":
 //                saveConfigToFile();
                 break;
+            case "CONTINUE_TO_VALIDATION":
+                StateMachineFacade.FACTORY.stateMachine().setState(State.S.CHECK_IMAGE);
+                break;
             // Add cases for other actions
             default:
                 break;
@@ -122,6 +125,7 @@ public class Controller implements ActionListener, Observer {
 
     public void validatePinDistance(String value) {
         float f = Float.parseFloat(value);
+        System.out.println("Set pin distance to: " + f);
         this.templateConfig.setPinDistance(f);
     }
 

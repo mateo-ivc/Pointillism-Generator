@@ -17,6 +17,10 @@ public class TemplateConfig {
 
     private Template[] template;
 
+    public TemplateConfig() {
+        System.out.println("Created Template Config");
+    }
+
     public float getPinDiameter() {
         return pinDiameter;
     }

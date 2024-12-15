@@ -16,6 +16,7 @@ public class EditorPanel extends JPanel {
         this.controller = controller;
         setLayout(null);
         ImagePanel imagePanel = new ImagePanel(300);
+        imagePanel.setImage(controller.getImage());
 
         imagePanel.setBorder(new LineBorder(Color.BLACK, 5));
         imagePanel.setBounds(32,0, 400, 400);
@@ -98,7 +99,6 @@ public class EditorPanel extends JPanel {
         colorPaletteLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(colorPaletteLabel);
 
-        //TODO Add color palette selection component
         ColorPaletteComponent colorPalette = new ColorPaletteComponent(List.of(Color.RED, Color.GREEN, Color.PINK));
         colorPalette.setBounds(700, 220, 200, 32);
         add(colorPalette);
@@ -147,11 +147,19 @@ public class EditorPanel extends JPanel {
 
         JButton loadConfigButton = new JButton("Laden");
         loadConfigButton.setBounds(500, 444, 100, 32);
+        loadConfigButton.addActionListener(e -> controller.loadConfigFromFile());
         add(loadConfigButton);
 
         JButton saveConfigButton = new JButton("Speichern");
         saveConfigButton.setBounds(700, 444, 100, 32);
+        saveConfigButton.addActionListener(e -> controller.saveConfigToFile());
         add(saveConfigButton);
+
+        JButton continueToValidationButton = new JButton("Weiter zur Überprüfung");
+        continueToValidationButton.setBounds(500, 494, 400, 32);
+        continueToValidationButton.setActionCommand("CONTINUE_TO_VALIDATION");
+        continueToValidationButton.addActionListener(controller);
+        add(continueToValidationButton);
 
     }
 
