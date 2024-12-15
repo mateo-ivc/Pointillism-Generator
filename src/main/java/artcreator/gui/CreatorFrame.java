@@ -2,12 +2,12 @@ package artcreator.gui;
 
 import artcreator.creator.CreatorFactory;
 import artcreator.creator.port.Creator;
+import artcreator.gui.panels.EditorPanel;
 import artcreator.gui.panels.ImagePanel;
 import artcreator.statemachine.StateMachineFactory;
 import artcreator.statemachine.port.Observer;
 import artcreator.statemachine.port.State;
 import artcreator.statemachine.port.Subject;
-
 import javax.swing.*;
 
 import java.awt.*;
@@ -49,7 +49,7 @@ public class CreatorFrame extends JFrame implements Observer {
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
         mainPanel.add(selectImagePanel(), "selectImagePanel");
-        mainPanel.add(editParameterPanel(), "parameterPanel");
+        mainPanel.add(new EditorPanel(this.controller), "parameterPanel");
     }
 
     @Override
@@ -65,6 +65,7 @@ public class CreatorFrame extends JFrame implements Observer {
                 if (this.controller.getImage() != null) {
                     //n=1 because it's the second panel getting added
                     JPanel editParameterPanel = (JPanel) mainPanel.getComponent(1);
+
                     ImagePanel imagePanel = (ImagePanel) editParameterPanel.getComponent(0);
                     imagePanel.setImage(this.controller.getImage());
                 }
@@ -103,14 +104,6 @@ public class CreatorFrame extends JFrame implements Observer {
         btn.setActionCommand("SELECT_IMAGE");
         btn.addActionListener(this.controller);
         panel.add(btn);
-        return panel;
-    }
-
-    private JPanel editParameterPanel() {
-        JPanel panel = new JPanel();
-        ImagePanel imagePanel = new ImagePanel();
-        imagePanel.setPreferredSize(new Dimension(200, 200));
-        panel.add(imagePanel, BorderLayout.CENTER);
         return panel;
     }
 
