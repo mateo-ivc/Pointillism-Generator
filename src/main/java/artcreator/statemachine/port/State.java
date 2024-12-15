@@ -13,8 +13,12 @@ public interface State {
 	public enum S implements State {
 
 		CREATE_TEMPLATE, //
-
 		/* more states */
+		SELECT_IMAGE,
+		EDIT_PARAMETERS,
+		CHECK_IMAGE,
+
+
 		SELECT_TEMPLATE,
 		EDIT_TEMPLATE,
 		SELECT_COLOR_PALETTE,
@@ -26,7 +30,7 @@ public interface State {
 
 		private List<State> subStates;
 
-		public static final S INITIAL_STATE = CREATE_TEMPLATE;
+		public static final S INITIAL_STATE = SELECT_IMAGE;
 
 		private S(State... subS) {
 			this.subStates = new ArrayList<>(Arrays.asList(subS));

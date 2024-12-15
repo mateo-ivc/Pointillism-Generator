@@ -1,6 +1,5 @@
 package artcreator.domain.impl;
 
-import artcreator.domain.port.ColorPalette;
 import artcreator.domain.port.Template;
 
 public class TemplateConfig {

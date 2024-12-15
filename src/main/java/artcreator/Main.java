@@ -8,11 +8,7 @@ public class Main {
 
 	public static void main(String[] args) throws TooManyListenersException {
 		CreatorFrame frame = new CreatorFrame();
-	      frame.setVisible(true);
-		  
-	      
-	      
-	      
+		frame.setVisible(true);
 	}
 
 }
