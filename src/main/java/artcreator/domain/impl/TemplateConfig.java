@@ -5,8 +5,8 @@ public class TemplateConfig {
     // Kann man doch bestimmt irgendwie zusammenfassen, als wieder jedes einzelne Attribut aufzulisten
 
     // pinDiameter und pinDistance kann man doch auch im Template selbst speichern?
-    private float pinDiameter;
-    private float pinDistance;
+    private float pinDiameter = 2;
+    private float pinDistance = 10;
     private ColorPalette colorPalette = new ColorPalette();
     private String partialTemplateFormat = "A4";
     private float templateHeight;

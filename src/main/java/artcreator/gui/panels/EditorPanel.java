@@ -33,33 +33,15 @@ public class EditorPanel extends JPanel {
         divider.setBackground(Color.BLACK); // Black color line
         add(divider);
 
-        JLabel pinDistanceLabel = new JLabel("Abstand");
-        pinDistanceLabel.setBounds(500, 64, 200, 32);
-        pinDistanceLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        add(pinDistanceLabel);
-
-        JTextField pinDistanceInputField = new JTextField(String.valueOf(controller.getTemplateConfig().getPinDistance()));
-        pinDistanceInputField.setBounds(700, 64, 200, 32);
-        pinDistanceInputField.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                controller.validatePinDistance(pinDistanceInputField.getText());
-            }
-        });
-        add(pinDistanceInputField);
-
         JLabel pinSizeLabel = new JLabel("Durchmesser");
-        pinSizeLabel.setBounds(500, 96, 200, 32);
+        pinSizeLabel.setBounds(500, 64, 200, 32);
         pinSizeLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(pinSizeLabel);
 
-        JTextField pinSizeInputField = new JTextField(String.valueOf(controller.getTemplateConfig().getPinDiameter()));
-        pinSizeInputField.setBounds(700, 96, 200, 32);
+        JTextField pinSizeInputField = new JTextField(
+                String.valueOf(controller.getTemplateConfig().getPinDiameter())
+        );
+        pinSizeInputField.setBounds(700, 64, 200, 32);
         pinSizeInputField.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -72,6 +54,26 @@ public class EditorPanel extends JPanel {
             }
         });
         add(pinSizeInputField);
+
+        JLabel pinDistanceLabel = new JLabel("Abstand");
+        pinDistanceLabel.setBounds(500, 96, 200, 32);
+        pinDistanceLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        add(pinDistanceLabel);
+
+        JTextField pinDistanceInputField = new JTextField(String.valueOf(controller.getTemplateConfig().getPinDistance()));
+        pinDistanceInputField.setBounds(700, 96, 200, 32);
+        pinDistanceInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                controller.validatePinDistance(pinDistanceInputField.getText());
+            }
+        });
+        add(pinDistanceInputField);
 
         JPanel divider2 = new JPanel();
         divider2.setBounds(500, 144, 400, 2); // x, y, width, height
