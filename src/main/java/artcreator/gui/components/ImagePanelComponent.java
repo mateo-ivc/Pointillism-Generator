@@ -1,14 +1,14 @@
-package artcreator.gui.panels;
+package artcreator.gui.components;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class ImagePanel extends JPanel {
+public class ImagePanelComponent extends JPanel {
     private BufferedImage image;
 
 
-    public ImagePanel() {
+    public ImagePanelComponent() {
     }
 
     public void setImage(BufferedImage image) {

@@ -2,6 +2,7 @@ package artcreator.gui.panels;
 
 import artcreator.gui.Controller;
 import artcreator.gui.components.ColorPaletteComponent;
+import artcreator.gui.components.ImagePanelComponent;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +16,7 @@ public class EditorPanel extends JPanel {
     public EditorPanel(Controller controller) {
         this.controller = controller;
         setLayout(null);
-        ImagePanel imagePanel = new ImagePanel(300);
+        ImagePanelComponent imagePanel = new ImagePanelComponent();
         imagePanel.setImage(controller.getImage());
 
         imagePanel.setBorder(new LineBorder(Color.BLACK, 5));
