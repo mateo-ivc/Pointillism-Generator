@@ -115,7 +115,7 @@ public class EditorPanel extends JPanel {
 
         ColorPaletteComponent colorPalette = new ColorPaletteComponent(List.of(Color.RED, Color.GREEN, Color.PINK));
         colorPalette.setBounds(700, 220, 200, 32);
-        //todo: add ac
+        //todo: add actionListener and generate new preview when changing colors
         add(colorPalette);
 
         JPanel divider4 = new JPanel();
