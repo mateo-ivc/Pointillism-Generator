@@ -107,6 +107,11 @@ public class Controller implements ActionListener, Observer {
         return null;
     }
 
+    public BufferedImage generatePreview() {
+
+        return null;
+    }
+
     public BufferedImage getImage() {
         return this.image;
     }

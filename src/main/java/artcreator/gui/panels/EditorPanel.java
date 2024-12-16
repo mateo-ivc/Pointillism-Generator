@@ -8,23 +8,28 @@ import artcreator.gui.utils.PaperFormatEnum;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.function.Supplier;
-import javax.swing.border.LineBorder;
+
 
 public class EditorPanel extends JPanel {
+    private final static int IMAGE_PANEL_WIDTH = 400;
+    private final static int IMAGE_PANEL_HEIGHT = 400;
     private Controller controller;
 
     public EditorPanel(Controller controller) {
         this.controller = controller;
         setLayout(null);
-        ImagePanelComponent imagePanel = new ImagePanelComponent(400, 400);
-        imagePanel.setImage(controller.getImage());
 
-        imagePanel.setBorder(new LineBorder(Color.BLACK, 5));
-        imagePanel.setBounds(32, 0, 400, 400);
+        ImagePanelComponent imagePanel = new ImagePanelComponent(IMAGE_PANEL_WIDTH);
+        imagePanel.setImage(controller.getImage());
+        imagePanel.setBounds(32, 0, IMAGE_PANEL_WIDTH, IMAGE_PANEL_HEIGHT);
         add(imagePanel);
+
+        ImagePanelComponent preview = new ImagePanelComponent(IMAGE_PANEL_WIDTH);
+        // create image preview
+        preview.setBounds(32, 420, IMAGE_PANEL_WIDTH, IMAGE_PANEL_HEIGHT);
+        preview.setBorder(BorderFactory.createDashedBorder(Color.BLACK, 1.0f, 5.0f, 1.0f, true));
+        add(preview);
 
         JLabel pinSettingsLabel = new JLabel("Steckelemente");
         pinSettingsLabel.setBounds(500, 0, 200, 50);
@@ -54,6 +59,7 @@ public class EditorPanel extends JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 controller.validatePinSize(pinSizeInputField.getText());
+                imagePanel.setImage(controller.generatePreview());
             }
         });
         add(pinSizeInputField);
@@ -74,6 +80,7 @@ public class EditorPanel extends JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 controller.validatePinDistance(pinDistanceInputField.getText());
+                imagePanel.setImage(controller.generatePreview());
             }
         });
         add(pinDistanceInputField);
@@ -92,6 +99,7 @@ public class EditorPanel extends JPanel {
         mirroredCheckBox.setBounds(700, 160, 100, 32);
         mirroredCheckBox.addChangeListener(e -> {
             controller.getTemplateConfig().setMirrored(mirroredCheckBox.isSelected());
+            imagePanel.setImage(controller.generatePreview());
         });
         add(mirroredCheckBox);
 
@@ -107,6 +115,7 @@ public class EditorPanel extends JPanel {
 
         ColorPaletteComponent colorPalette = new ColorPaletteComponent(List.of(Color.RED, Color.GREEN, Color.PINK));
         colorPalette.setBounds(700, 220, 200, 32);
+        //todo: add ac
         add(colorPalette);
 
         JPanel divider4 = new JPanel();
@@ -170,7 +179,7 @@ public class EditorPanel extends JPanel {
         add(saveConfigButton);
 
         JButton revertToImageSelectionButton = new JButton("Zurück zur Bildauswahl");
-        revertToImageSelectionButton.setBounds(32, 494, 400, 32);
+        revertToImageSelectionButton.setBounds(500, 544, 400, 32);
         revertToImageSelectionButton.setActionCommand("REVERT_TO_IMAGE_SELECTION");
         revertToImageSelectionButton.addActionListener(controller);
         add(revertToImageSelectionButton);

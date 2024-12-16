@@ -10,7 +10,7 @@ import java.awt.*;
 public class CheckImagePanel extends JPanel {
     public CheckImagePanel(Controller controller){
         setLayout(null);
-        ImagePanelComponent imagePanel = new ImagePanelComponent(400,400);
+        ImagePanelComponent imagePanel = new ImagePanelComponent(400);
         imagePanel.setImage(controller.getImage());
         imagePanel.setBorder(new LineBorder(Color.BLACK, 5));
         imagePanel.setBounds(32,0, 400, 400);

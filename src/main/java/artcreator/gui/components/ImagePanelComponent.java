@@ -6,11 +6,11 @@ import java.awt.image.BufferedImage;
 
 public class ImagePanelComponent extends JPanel {
     private BufferedImage image;
-    int width, height;
+    int width;
 
-    public ImagePanelComponent(int width, int height) {
+    public ImagePanelComponent(int width) {
     this.width = width;
-    this.height = height;
+
     }
 
     public void setImage(BufferedImage image) {
@@ -22,7 +22,12 @@ public class ImagePanelComponent extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (image != null) {
-            g.drawImage(image, 0, 0,400,400, this);
+            // Calculate the height while maintaining the aspect ratio
+
+            int height = (int) ((double) image.getHeight() / image.getWidth() * width);
+
+            // Draw the image with the calculated dimensions
+            g.drawImage(image, 0, 0, width, height, this);
         }
     }
 }

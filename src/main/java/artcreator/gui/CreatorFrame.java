@@ -26,7 +26,7 @@ public class CreatorFrame extends JFrame implements Observer {
     private BufferedImage image;
 
     private static final int WIDTH = 940;
-    private static final int HEIGHT = 600;
+    private static final int HEIGHT = 900;
 
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
