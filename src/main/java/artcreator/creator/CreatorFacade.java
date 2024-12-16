@@ -73,7 +73,10 @@ public class CreatorFacade implements CreatorFactory, Creator, IGenerator, IImag
         //todo: auslagern in eigene klasse
         try {
             BufferedImage image = ImageIO.read(file);
+            BufferedImage scaledImage;
+
             StateMachineFactory.FACTORY.stateMachine().setState(S.EDIT_PARAMETERS);
+
             return image;
         } catch (IOException e) {
             StateMachineFactory.FACTORY.stateMachine().setState(S.ERROR_STATE);

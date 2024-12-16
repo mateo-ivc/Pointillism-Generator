@@ -18,6 +18,7 @@ import artcreator.creator.impl.TemplateGenerator;
 import artcreator.domain.impl.ColorConfig;
 import artcreator.domain.impl.Template;
 import artcreator.domain.impl.TemplateConfig;
+import artcreator.gui.utils.PaperFormatEnum;
 import artcreator.statemachine.StateMachineFacade;
 import artcreator.statemachine.port.Observer;
 import artcreator.statemachine.port.State;
@@ -147,6 +148,10 @@ public class Controller implements ActionListener, Observer {
 
     public TemplateConfig getTemplateConfig() {
         return templateConfig;
+    }
+
+    public void setPartialTemplateFormat(PaperFormatEnum format) {
+        templateConfig.setPartialTemplateFormat(format);
     }
 
 }

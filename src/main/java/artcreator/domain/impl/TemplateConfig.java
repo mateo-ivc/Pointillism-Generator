@@ -1,6 +1,8 @@
 package artcreator.domain.impl;
 
 
+import artcreator.gui.utils.PaperFormatEnum;
+
 public class TemplateConfig {
     // Kann man doch bestimmt irgendwie zusammenfassen, als wieder jedes einzelne Attribut aufzulisten
 
@@ -8,7 +10,7 @@ public class TemplateConfig {
     private float pinDiameter = 2;
     private float pinDistance = 10;
     private ColorPalette colorPalette = new ColorPalette();
-    private String partialTemplateFormat = "A4";
+    private PaperFormatEnum partialTemplateFormat = PaperFormatEnum.A4;
     private float templateHeight;
     private float templateWidth;
 
@@ -51,12 +53,12 @@ public class TemplateConfig {
     }
 
     
-    public String getPartialTemplateFormat() {
+    public PaperFormatEnum getPartialTemplateFormat() {
         return partialTemplateFormat;
     }
 
     
-    public void setPartialTemplateFormat(String partialTemplateFormat) {
+    public void setPartialTemplateFormat(PaperFormatEnum partialTemplateFormat) {
         this.partialTemplateFormat = partialTemplateFormat;
     }
 

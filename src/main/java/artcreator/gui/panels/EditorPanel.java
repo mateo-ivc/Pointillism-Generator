@@ -3,11 +3,14 @@ package artcreator.gui.panels;
 import artcreator.gui.Controller;
 import artcreator.gui.components.ColorPaletteComponent;
 import artcreator.gui.components.ImagePanelComponent;
+import artcreator.gui.utils.PaperFormatEnum;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.function.Supplier;
 import javax.swing.border.LineBorder;
 
 public class EditorPanel extends JPanel {
@@ -16,11 +19,11 @@ public class EditorPanel extends JPanel {
     public EditorPanel(Controller controller) {
         this.controller = controller;
         setLayout(null);
-        ImagePanelComponent imagePanel = new ImagePanelComponent();
+        ImagePanelComponent imagePanel = new ImagePanelComponent(400, 400);
         imagePanel.setImage(controller.getImage());
 
         imagePanel.setBorder(new LineBorder(Color.BLACK, 5));
-        imagePanel.setBounds(32,0, 400, 400);
+        imagePanel.setBounds(32, 0, 400, 400);
         add(imagePanel);
 
         JLabel pinSettingsLabel = new JLabel("Steckelemente");
@@ -139,8 +142,16 @@ public class EditorPanel extends JPanel {
         printFormatLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(printFormatLabel);
 
-        JComboBox<String> formatSelectionDropdown = new JComboBox<>(new String[]{"A4", "A3", "A2"});
+        JComboBox<PaperFormatEnum> formatSelectionDropdown = new JComboBox<>(PaperFormatEnum.values());
         formatSelectionDropdown.setBounds(700, 380, 200, 32);
+        formatSelectionDropdown.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PaperFormatEnum selectedFormat = (PaperFormatEnum) formatSelectionDropdown.getSelectedItem();
+                System.out.println("Selected Item: " + selectedFormat.getDimension());
+                controller.setPartialTemplateFormat(selectedFormat);
+            }
+        });
         add(formatSelectionDropdown);
 
         JPanel divider6 = new JPanel();
