@@ -54,7 +54,9 @@ public class Controller implements ActionListener, Observer {
         switch (command) {
             case "SELECT_IMAGE":
                 this.image = loadImage();
-                StateMachineFacade.FACTORY.stateMachine().setState(State.S.EDIT_PARAMETERS);
+                if (this.image != null) {
+                    StateMachineFacade.FACTORY.stateMachine().setState(State.S.EDIT_PARAMETERS);
+                }
                 break;
             case "GenerateTemplate":
 //                generateTemplate();
@@ -64,6 +66,9 @@ public class Controller implements ActionListener, Observer {
                 break;
             case "CONTINUE_TO_VALIDATION":
                 StateMachineFacade.FACTORY.stateMachine().setState(State.S.CHECK_IMAGE);
+                break;
+            case "REVERT_TO_IMAGE_SELECTION":
+                StateMachineFacade.FACTORY.stateMachine().setState(State.S.SELECT_IMAGE);
                 break;
             // Add cases for other actions
             default:
@@ -96,14 +101,7 @@ public class Controller implements ActionListener, Observer {
         });
         int result = fileChooser.showOpenDialog(this.myView);
         if (result == JFileChooser.APPROVE_OPTION) {
-            try {
-                File file = fileChooser.getSelectedFile();
-                BufferedImage picture = ImageIO.read(file);
-                return picture;
-            } catch (IOException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "ERROR");
-            }
+            return CreatorFactory.FACTORY.imageLoader().loadImage(fileChooser.getSelectedFile());
         }
         return null;
     }
@@ -147,7 +145,7 @@ public class Controller implements ActionListener, Observer {
 
     }
 
-    public TemplateConfig getTemplateConfig(){
+    public TemplateConfig getTemplateConfig() {
         return templateConfig;
     }
 

@@ -2,6 +2,7 @@ package artcreator.creator;
 
 import artcreator.creator.port.Creator;
 import artcreator.creator.port.IGenerator;
+import artcreator.creator.port.IImageLoader;
 
 public interface CreatorFactory {
 	
@@ -10,4 +11,5 @@ public interface CreatorFactory {
 
 	IGenerator generator();
 
+	IImageLoader imageLoader();
 }

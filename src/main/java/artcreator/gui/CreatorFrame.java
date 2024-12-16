@@ -4,7 +4,7 @@ import artcreator.creator.CreatorFactory;
 import artcreator.creator.port.Creator;
 import artcreator.gui.panels.CheckImagePanel;
 import artcreator.gui.panels.EditorPanel;
-import artcreator.gui.panels.ImagePanel;
+import artcreator.gui.panels.SelectImagePanel;
 import artcreator.statemachine.StateMachineFactory;
 import artcreator.statemachine.port.Observer;
 import artcreator.statemachine.port.State;
@@ -25,8 +25,8 @@ public class CreatorFrame extends JFrame implements Observer {
 
     private BufferedImage image;
 
-    private static final int WIDTH = 600;
-    private static final int HEIGHT = 500;
+    private static final int WIDTH = 940;
+    private static final int HEIGHT = 600;
 
     private CardLayout cardLayout = new CardLayout();
     private JPanel mainPanel = new JPanel(cardLayout);
@@ -45,11 +45,12 @@ public class CreatorFrame extends JFrame implements Observer {
         this.getContentPane().add(this.mainPanel);
 
         setupTopPanel();
+
         this.getContentPane().setLayout(new BorderLayout());
         this.getContentPane().add(topPanel, BorderLayout.NORTH);
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
-        mainPanel.add(selectImagePanel(), "selectImagePanel");
+        mainPanel.add(new SelectImagePanel(controller), "selectImagePanel");
     }
 
     @Override
@@ -57,7 +58,12 @@ public class CreatorFrame extends JFrame implements Observer {
         // Switch panel based on the current state
         switch (currentState) {
             case State.S.SELECT_IMAGE:
-                cardLayout.show(mainPanel, "selectImagePanel");
+                if (controller != null){
+                    mainPanel.removeAll();
+                    mainPanel.add(new SelectImagePanel(controller), "selectImagePanel");
+                    cardLayout.show(mainPanel, "selectImagePanel");
+                }
+
                 break;
             case State.S.EDIT_PARAMETERS:
                 mainPanel.removeAll();
@@ -79,7 +85,7 @@ public class CreatorFrame extends JFrame implements Observer {
         topPanel.setLayout(new FlowLayout());
         topPanel.add(selectImageLabel);
         topPanel.add(parameterLabel);
-        updateLabels(State.S.SELECT_IMAGE); // Set initial state
+        updateLabels(State.S.SELECT_IMAGE);
     }
 
     private void updateLabels(State currentState) {
@@ -96,14 +102,4 @@ public class CreatorFrame extends JFrame implements Observer {
         }
 
     }
-
-    private JPanel selectImagePanel() {
-        JPanel panel = new JPanel();
-        JButton btn = new JButton("Select Image");
-        btn.setActionCommand("SELECT_IMAGE");
-        btn.addActionListener(this.controller);
-        panel.add(btn);
-        return panel;
-    }
-
 }

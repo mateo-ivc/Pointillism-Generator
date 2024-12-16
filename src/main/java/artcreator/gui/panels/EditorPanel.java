@@ -83,7 +83,7 @@ public class EditorPanel extends JPanel {
         add(mirroredLabel);
 
         JCheckBox mirroredCheckBox = new JCheckBox((Icon) null, controller.getTemplateConfig().isMirrored());
-        mirroredCheckBox.setBounds(700, 160, 200, 32);
+        mirroredCheckBox.setBounds(700, 160, 100, 32);
         mirroredCheckBox.addChangeListener(e -> {
             controller.getTemplateConfig().setMirrored(mirroredCheckBox.isSelected());
         });
@@ -154,6 +154,13 @@ public class EditorPanel extends JPanel {
         saveConfigButton.setBounds(700, 444, 100, 32);
         saveConfigButton.addActionListener(e -> controller.saveConfigToFile());
         add(saveConfigButton);
+
+        JButton revertToImageSelectionButton = new JButton("Zurück zur Bildauswahl");
+        revertToImageSelectionButton.setBounds(32, 494, 400, 32);
+        revertToImageSelectionButton.setActionCommand("REVERT_TO_IMAGE_SELECTION");
+        revertToImageSelectionButton.addActionListener(controller);
+        add(revertToImageSelectionButton);
+
 
         JButton continueToValidationButton = new JButton("Weiter zur Überprüfung");
         continueToValidationButton.setBounds(500, 494, 400, 32);
