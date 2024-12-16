@@ -1,4 +1,6 @@
-package artcreator.domain.port;
+package artcreator.domain.impl;
+
+import artcreator.domain.port.Domain;
 
 import java.awt.*;
 

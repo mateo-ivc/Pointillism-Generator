@@ -21,14 +21,59 @@ public class CheckImagePanel extends JPanel {
         add(checkParametersLabel);
 
         JPanel divider = new JPanel();
-        divider.setBounds(500, 48, 400, 2); // x, y, width, height
+        divider.setBounds(500, 48, 400, 2);
         divider.setBackground(Color.BLACK); // Black color line
         add(divider);
 
-        JLabel pinDistanceLabel = new JLabel("Abstand: " + controller.getTemplateConfig().getPinDistance());
-        pinDistanceLabel.setBounds(500, 64, 200, 32);
-        pinDistanceLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        add(pinDistanceLabel);
+        JLabel pinDistance = new JLabel("Abstand: " + controller.getTemplateConfig().getPinDistance());
+        pinDistance.setBounds(500, 64, 200, 32);
+        pinDistance.setFont(new Font("Arial", Font.BOLD, 20));
+        add(pinDistance);
+
+        JLabel pinDiameter = new JLabel("Durchmesser: " + controller.getTemplateConfig().getPinDiameter());
+        pinDiameter.setBounds(700, 64, 200, 32);
+        pinDiameter.setFont(new Font("Arial", Font.BOLD, 20));
+        add(pinDiameter);
+
+        JLabel mirrored = new JLabel("Spiegelung: " + (controller.getTemplateConfig().isMirrored() ? "Ja" : "Nein"));
+        mirrored.setBounds(500, 96, 200, 32);
+        mirrored.setFont(new Font("Arial", Font.BOLD, 20));
+        add(mirrored);
+
+        JLabel imageWidth = new JLabel("Bildbreite: " + controller.getTemplateConfig().getTemplateWidth());
+        imageWidth.setBounds(500, 128, 200, 32);
+        imageWidth.setFont(new Font("Arial", Font.BOLD, 20));
+        add(imageWidth);
+
+        JLabel imageHeight = new JLabel("Bildhöhe: " + controller.getTemplateConfig().getTemplateHeight());
+        imageHeight.setBounds(700, 128, 200, 32);
+        imageHeight.setFont(new Font("Arial", Font.BOLD, 20));
+        add(imageHeight);
+
+        JLabel templatesLabel = new JLabel("Vorlagen");
+        templatesLabel.setBounds(500, 192, 200, 32);
+        templatesLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        add(templatesLabel);
+
+        JPanel divider2 = new JPanel();
+        divider2.setBounds(500, 240, 400, 2);
+        divider2.setBackground(Color.BLACK); // Black color line
+        add(divider2);
+        
+        JButton materialAndColorList = new JButton("Material- / Farbliste");
+        materialAndColorList.setBounds(500, 256, 200, 32);
+        materialAndColorList.setFont(new Font("Arial", Font.BOLD, 20));
+        add(materialAndColorList);
+
+        JButton colorLegend = new JButton("Farblegende");
+        colorLegend.setBounds(500, 288, 200, 32);
+        colorLegend.setFont(new Font("Arial", Font.BOLD, 20));
+        add(colorLegend);
+
+        JButton template = new JButton("Vorlage");
+        template.setBounds(500, 320, 200, 32);
+        template.setFont(new Font("Arial", Font.BOLD, 20));
+        add(template);
 
     }
 }
