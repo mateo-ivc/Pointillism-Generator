@@ -19,6 +19,13 @@ public class DomainFacade implements DomainFactory, Domain, IConfigService {
     public synchronized Domain domain() {
         if (this.domain == null) {
             this.domain = new DomainImpl();
+        }
+        return this;
+    }
+
+    @Override
+    public synchronized IConfigService configService() {
+        if (this.configService == null) {
             this.configService = new ConfigService();
         }
         return this;

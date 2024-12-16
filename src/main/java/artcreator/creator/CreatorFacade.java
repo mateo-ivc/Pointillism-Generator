@@ -23,13 +23,11 @@ public class CreatorFacade implements CreatorFactory, Creator, IGenerator {
 
     @Override
     public Creator creator() {
-        if (this.creator == null) {
-            this.stateMachine = StateMachineFactory.FACTORY.stateMachine();
-            this.creator = new CreatorImpl(stateMachine, DomainFactory.FACTORY.domain());
-            this.previewGenerator = new PreviewGenerator();
-            this.templateGenerator = new TemplateGenerator();
-        }
-        return this;
+        return init();
+    }
+    @Override
+    public IGenerator generator() {
+        return init();
     }
 
     @Override
@@ -46,5 +44,15 @@ public class CreatorFacade implements CreatorFactory, Creator, IGenerator {
     @Override
     public Template generatePreview(TemplateConfig config) {
         return previewGenerator.generateTemplate(config);
+    }
+
+    private CreatorFacade init() {
+        if (this.creator == null) {
+            this.stateMachine = StateMachineFactory.FACTORY.stateMachine();
+            this.creator = new CreatorImpl(stateMachine, DomainFactory.FACTORY.domain());
+            this.previewGenerator = new PreviewGenerator();
+            this.templateGenerator = new TemplateGenerator();
+        }
+        return this;
     }
 }

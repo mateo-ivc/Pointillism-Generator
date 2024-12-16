@@ -11,6 +11,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
+import artcreator.creator.CreatorFacade;
+import artcreator.creator.CreatorFactory;
 import artcreator.creator.port.Creator;
 import artcreator.creator.impl.TemplateGenerator;
 import artcreator.domain.impl.ColorConfig;
@@ -44,6 +46,7 @@ public class Controller implements ActionListener, Observer {
     }
 
     public synchronized void actionPerformed(ActionEvent e) {
+
         /* read input */
         String command = e.getActionCommand();
         System.out.println("something has been triggered");
