@@ -15,9 +15,12 @@ import artcreator.creator.CreatorFacade;
 import artcreator.creator.CreatorFactory;
 import artcreator.creator.port.Creator;
 import artcreator.creator.impl.TemplateGenerator;
+import artcreator.domain.DomainFacade;
+import artcreator.domain.DomainFactory;
 import artcreator.domain.impl.ColorConfig;
 import artcreator.domain.impl.Template;
 import artcreator.domain.impl.TemplateConfig;
+import artcreator.domain.port.Domain;
 import artcreator.gui.utils.PaperFormatEnum;
 import artcreator.statemachine.StateMachineFacade;
 import artcreator.statemachine.port.Observer;
@@ -33,7 +36,6 @@ public class Controller implements ActionListener, Observer {
 
     private TemplateGenerator templateGenerator;
     private Template previewTemplate;
-    private TemplateConfig templateConfig;
     private ColorConfig colorConfig;
 
     private BufferedImage image;
@@ -43,7 +45,6 @@ public class Controller implements ActionListener, Observer {
         this.myModel = model;
         this.subject = subject;
         this.subject.attach(this);
-        this.templateConfig = new TemplateConfig();
     }
 
     public synchronized void actionPerformed(ActionEvent e) {
@@ -54,7 +55,7 @@ public class Controller implements ActionListener, Observer {
         // Check the command and perform corresponding actions
         switch (command) {
             case "SELECT_IMAGE":
-                this.image = loadImage();
+                this.image = DomainFacade.FACTORY.imageLoadingService().loadImage(myView);
                 if (this.image != null) {
                     StateMachineFacade.FACTORY.stateMachine().setState(State.S.EDIT_PARAMETERS);
                 }
@@ -81,37 +82,6 @@ public class Controller implements ActionListener, Observer {
         /* modify controller or view if necessary */
     }
 
-    private BufferedImage loadImage() {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        fileChooser.setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(File f) {
-                if (f.isDirectory()) {
-                    return true;
-                } else {
-                    String filename = f.getName().toLowerCase();
-                    return filename.endsWith(".jpg") || filename.endsWith(".jpeg");
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "JPG Images (*.jpg)";
-            }
-        });
-        int result = fileChooser.showOpenDialog(this.myView);
-        if (result == JFileChooser.APPROVE_OPTION) {
-            return CreatorFactory.FACTORY.imageLoader().loadImage(fileChooser.getSelectedFile());
-        }
-        return null;
-    }
-
-    public BufferedImage generatePreview() {
-
-        return null;
-    }
-
     public BufferedImage getImage() {
         return this.image;
     }
@@ -120,15 +90,19 @@ public class Controller implements ActionListener, Observer {
 
     }
 
+    public BufferedImage generatePreview(){
+        return CreatorFacade.FACTORY.generator().generatePreview(DomainFacade.FACTORY.configService().getCurrentConfig(), image);
+    }
+
     public void validatePinSize(String value) {
         float f = Float.parseFloat(value);
-        this.templateConfig.setPinDiameter(f);
+        DomainFacade.FACTORY.configService().getCurrentConfig().setPinDiameter(f);
     }
 
     public void validatePinDistance(String value) {
         float f = Float.parseFloat(value);
         System.out.println("Set pin distance to: " + f);
-        this.templateConfig.setPinDistance(f);
+        DomainFacade.FACTORY.configService().getCurrentConfig().setPinDistance(f);
     }
 
     public void loadConfigFromFile() {
@@ -152,11 +126,11 @@ public class Controller implements ActionListener, Observer {
     }
 
     public TemplateConfig getTemplateConfig() {
-        return templateConfig;
+        return DomainFacade.FACTORY.configService().getCurrentConfig();
     }
 
     public void setPartialTemplateFormat(PaperFormatEnum format) {
-        templateConfig.setPartialTemplateFormat(format);
+        DomainFacade.FACTORY.configService().getCurrentConfig().setPartialTemplateFormat(format);
     }
 
 }

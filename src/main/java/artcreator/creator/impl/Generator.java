@@ -4,6 +4,8 @@ import artcreator.domain.impl.ColorPalette;
 import artcreator.domain.impl.Template;
 import artcreator.domain.impl.TemplateConfig;
 
+import java.awt.image.BufferedImage;
+
 abstract class Generator {
     protected float pinDiameter;
     protected float pinDistance;
@@ -13,5 +15,5 @@ abstract class Generator {
     protected float printFormatHeight;
     protected ColorPalette colors;
 
-    public abstract Template generateTemplate(TemplateConfig config);
+    public abstract Template generateTemplate(TemplateConfig config, BufferedImage input);
 }

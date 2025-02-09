@@ -11,8 +11,8 @@ public class TemplateConfig {
     private float pinDistance = 10;
     private ColorPalette colorPalette = new ColorPalette();
     private PaperFormatEnum partialTemplateFormat = PaperFormatEnum.A4;
-    private float templateHeight;
-    private float templateWidth;
+    private float templateHeight = 1000;
+    private float templateWidth = 1000;
 
     private boolean mirrored;
 

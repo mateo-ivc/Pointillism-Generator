@@ -3,8 +3,10 @@ package artcreator.creator.port;
 import artcreator.domain.impl.Template;
 import artcreator.domain.impl.TemplateConfig;
 
-public interface IGenerator {
-    Template generatePrintableDocument(TemplateConfig config);
+import java.awt.image.BufferedImage;
 
-    Template generatePreview(TemplateConfig config);
+public interface IGenerator {
+    Template generatePrintableDocument(TemplateConfig config, BufferedImage input);
+
+    BufferedImage generatePreview(TemplateConfig config, BufferedImage input);
 }

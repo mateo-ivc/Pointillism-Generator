@@ -2,6 +2,7 @@ package artcreator.creator;
 
 import artcreator.creator.impl.CreatorImpl;
 import artcreator.creator.impl.PreviewGenerator;
+import artcreator.creator.impl.PreviewImageGenerator;
 import artcreator.creator.impl.TemplateGenerator;
 import artcreator.creator.port.Creator;
 import artcreator.creator.port.IGenerator;
@@ -49,13 +50,13 @@ public class CreatorFacade implements CreatorFactory, Creator, IGenerator, IImag
     }
 
     @Override
-    public Template generatePrintableDocument(TemplateConfig config) {
-        return templateGenerator.generateTemplate(config);
+    public Template generatePrintableDocument(TemplateConfig config, BufferedImage input) {
+        return templateGenerator.generateTemplate(config, input);
     }
 
     @Override
-    public Template generatePreview(TemplateConfig config) {
-        return previewGenerator.generateTemplate(config);
+    public BufferedImage generatePreview(TemplateConfig config, BufferedImage input) {
+        return new PreviewImageGenerator().generatePreviewFromTemplate(previewGenerator.generateTemplate(config, input));
     }
 
     private CreatorFacade init() {

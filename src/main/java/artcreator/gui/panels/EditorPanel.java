@@ -59,7 +59,7 @@ public class EditorPanel extends JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 controller.validatePinSize(pinSizeInputField.getText());
-                imagePanel.setImage(controller.generatePreview());
+                preview.setImage(controller.generatePreview());
             }
         });
         add(pinSizeInputField);
@@ -80,7 +80,7 @@ public class EditorPanel extends JPanel {
             @Override
             public void focusLost(FocusEvent e) {
                 controller.validatePinDistance(pinDistanceInputField.getText());
-                imagePanel.setImage(controller.generatePreview());
+                preview.setImage(controller.generatePreview());
             }
         });
         add(pinDistanceInputField);
@@ -99,7 +99,7 @@ public class EditorPanel extends JPanel {
         mirroredCheckBox.setBounds(700, 160, 100, 32);
         mirroredCheckBox.addChangeListener(e -> {
             controller.getTemplateConfig().setMirrored(mirroredCheckBox.isSelected());
-            imagePanel.setImage(controller.generatePreview());
+            preview.setImage(controller.generatePreview());
         });
         add(mirroredCheckBox);
 
@@ -128,8 +128,20 @@ public class EditorPanel extends JPanel {
         imageWidthLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(imageWidthLabel);
 
-        JTextField imageWidthInputField = new JTextField("10");
+        JTextField imageWidthInputField = new JTextField(String.valueOf(controller.getTemplateConfig().getTemplateWidth()));
         imageWidthInputField.setBounds(700, 284, 200, 32);
+        imageWidthInputField.addFocusListener(new FocusListener(){
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                controller.getTemplateConfig().setTemplateWidth(Float.parseFloat(imageWidthInputField.getText()));
+                preview.setImage(controller.generatePreview());
+            }
+        });
         add(imageWidthInputField);
 
         JLabel imageHeightLabel = new JLabel("Bildhöhe");
@@ -137,8 +149,20 @@ public class EditorPanel extends JPanel {
         imageHeightLabel.setFont(new Font("Arial", Font.BOLD, 20));
         add(imageHeightLabel);
 
-        JTextField imageHeightInputField = new JTextField("10");
+        JTextField imageHeightInputField = new JTextField(String.valueOf(controller.getTemplateConfig().getTemplateHeight()));
         imageHeightInputField.setBounds(700, 316, 200, 32);
+        imageHeightInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                controller.getTemplateConfig().setTemplateHeight(Float.parseFloat(imageHeightInputField.getText()));
+                preview.setImage(controller.generatePreview());
+            }
+        });
         add(imageHeightInputField);
 
         JPanel divider5 = new JPanel();
