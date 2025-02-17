@@ -15,6 +15,7 @@ import java.util.List;
 public class PreviewGenerator extends Generator {
     @Override
     public Template generateTemplate(TemplateConfig config, BufferedImage input) {
+
         //Todo scale image
         //TODO apply dither
         //TODO Generate Pin Positions

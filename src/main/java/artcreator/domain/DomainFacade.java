@@ -85,7 +85,7 @@ public class DomainFacade implements DomainFactory, Domain, IConfigService, IIma
     @Override
     public BufferedImage loadImage(Component parent) {
         BufferedImage bufferedImage = this.imageLoader.loadImage(parent);
-        StateMachineFacade.FACTORY.stateMachine().setState(State.S.EDIT_PARAMETERS);
+//        StateMachineFacade.FACTORY.stateMachine().setState(State.S.EDIT_PARAMETERS);
         return bufferedImage;
     }
 }

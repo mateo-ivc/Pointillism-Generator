@@ -34,7 +34,6 @@ public class CreatorFrame extends JFrame implements Observer {
     private JLabel selectImageLabel = new JLabel("Select Image");
     private JLabel parameterLabel = new JLabel("Parameters");
 
-
     public CreatorFrame() throws TooManyListenersException {
         super("ArtCreator");
         this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -63,11 +62,12 @@ public class CreatorFrame extends JFrame implements Observer {
                     mainPanel.add(new SelectImagePanel(controller), "selectImagePanel");
                     cardLayout.show(mainPanel, "selectImagePanel");
                 }
-
                 break;
             case State.S.EDIT_PARAMETERS:
                 mainPanel.removeAll();
-                mainPanel.add(new EditorPanel(this.controller), "parameterPanel");
+                EditorPanel editorPanel = new EditorPanel(this.controller);
+                controller.setEditorPanel(editorPanel);
+                mainPanel.add(editorPanel, "parameterPanel");
                 cardLayout.show(mainPanel, "parameterPanel");
                 break;
             case State.S.CHECK_IMAGE:

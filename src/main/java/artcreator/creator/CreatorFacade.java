@@ -1,9 +1,6 @@
 package artcreator.creator;
 
-import artcreator.creator.impl.CreatorImpl;
-import artcreator.creator.impl.PreviewGenerator;
-import artcreator.creator.impl.PreviewImageGenerator;
-import artcreator.creator.impl.TemplateGenerator;
+import artcreator.creator.impl.*;
 import artcreator.creator.port.Creator;
 import artcreator.creator.port.IGenerator;
 import artcreator.creator.port.IImageLoader;
@@ -15,9 +12,11 @@ import artcreator.statemachine.port.StateMachine;
 import artcreator.statemachine.port.State.S;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class CreatorFacade implements CreatorFactory, Creator, IGenerator, IImageLoader {
 
@@ -57,6 +56,11 @@ public class CreatorFacade implements CreatorFactory, Creator, IGenerator, IImag
     @Override
     public BufferedImage generatePreview(TemplateConfig config, BufferedImage input) {
         return new PreviewImageGenerator().generatePreviewFromTemplate(previewGenerator.generateTemplate(config, input));
+    }
+
+    @Override
+    public List<Color> quantizeImage(BufferedImage image, int n) {
+        return new MedianCutColorGenerator().quantizeImage(image, n);
     }
 
     private CreatorFacade init() {

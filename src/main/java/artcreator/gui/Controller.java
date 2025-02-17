@@ -1,26 +1,21 @@
 package artcreator.gui;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
+import java.util.List;
 
 import artcreator.creator.CreatorFacade;
-import artcreator.creator.CreatorFactory;
 import artcreator.creator.port.Creator;
 import artcreator.creator.impl.TemplateGenerator;
 import artcreator.domain.DomainFacade;
-import artcreator.domain.DomainFactory;
 import artcreator.domain.impl.ColorConfig;
 import artcreator.domain.impl.Template;
 import artcreator.domain.impl.TemplateConfig;
-import artcreator.domain.port.Domain;
+import artcreator.gui.panels.CheckImagePanel;
+import artcreator.gui.panels.EditorPanel;
+import artcreator.gui.panels.SelectImagePanel;
 import artcreator.gui.utils.PaperFormatEnum;
 import artcreator.statemachine.StateMachineFacade;
 import artcreator.statemachine.port.Observer;
@@ -39,6 +34,7 @@ public class Controller implements ActionListener, Observer {
     private ColorConfig colorConfig;
 
     private BufferedImage image;
+    private EditorPanel editorPanel;
 
     public Controller(CreatorFrame view, Subject subject, Creator model) {
         this.myView = view;
@@ -55,7 +51,7 @@ public class Controller implements ActionListener, Observer {
         // Check the command and perform corresponding actions
         switch (command) {
             case "SELECT_IMAGE":
-                this.image = DomainFacade.FACTORY.imageLoadingService().loadImage(myView);
+                loadImage();
                 if (this.image != null) {
                     StateMachineFacade.FACTORY.stateMachine().setState(State.S.EDIT_PARAMETERS);
                 }
@@ -80,6 +76,21 @@ public class Controller implements ActionListener, Observer {
 
     public void update(State newState) {
         /* modify controller or view if necessary */
+        switch (newState) {
+            case State.S.SELECT_IMAGE:
+                break;
+            case State.S.EDIT_PARAMETERS:
+                List<Color> colorPalette = generateColorPallete(4);
+                saveColorPalette(colorPalette);
+                editorPanel.setColorPalette(colorPalette);
+                break;
+            case State.S.CHECK_IMAGE:
+
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + newState);
+        }
+
     }
 
     public BufferedImage getImage() {
@@ -90,8 +101,22 @@ public class Controller implements ActionListener, Observer {
 
     }
 
-    public BufferedImage generatePreview(){
-        return CreatorFacade.FACTORY.generator().generatePreview(DomainFacade.FACTORY.configService().getCurrentConfig(), image);
+    public BufferedImage generatePreview() {
+        if (this.image != null) {
+            return CreatorFacade.FACTORY.generator().generatePreview(DomainFacade.FACTORY.configService().getCurrentConfig(), image);
+        }
+        return new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+    }
+
+    public List<Color> generateColorPallete(int size) {
+        if (this.image != null) {
+            return CreatorFacade.FACTORY.generator().quantizeImage(image, size);
+        }
+        return null;
+    }
+
+    public void loadImage() {
+        this.image = DomainFacade.FACTORY.imageLoadingService().loadImage(myView);
     }
 
     public void validatePinSize(String value) {
@@ -121,8 +146,9 @@ public class Controller implements ActionListener, Observer {
 
     }
 
-    public void saveColorPalette() {
-
+    public void saveColorPalette(List<Color> colorPalette) {
+        //todo: entweder am Anfag direkt ein ColorPalette Objekt erstelle oder nur mit List<Color> arbeiten
+        //DomainFacade.FACTORY.configService().getCurrentConfig().setColorPalette(colorPalette);
     }
 
     public TemplateConfig getTemplateConfig() {
@@ -131,6 +157,10 @@ public class Controller implements ActionListener, Observer {
 
     public void setPartialTemplateFormat(PaperFormatEnum format) {
         DomainFacade.FACTORY.configService().getCurrentConfig().setPartialTemplateFormat(format);
+    }
+
+    public void setEditorPanel(EditorPanel editorPanel) {
+        this.editorPanel = editorPanel;
     }
 
 }

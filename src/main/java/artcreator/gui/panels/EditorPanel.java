@@ -8,6 +8,7 @@ import artcreator.gui.utils.PaperFormatEnum;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -15,6 +16,7 @@ public class EditorPanel extends JPanel {
     private final static int IMAGE_PANEL_WIDTH = 400;
     private final static int IMAGE_PANEL_HEIGHT = 400;
     private Controller controller;
+    private ColorPaletteComponent colorPaletteComponent;
 
     public EditorPanel(Controller controller) {
         this.controller = controller;
@@ -116,6 +118,7 @@ public class EditorPanel extends JPanel {
         ColorPaletteComponent colorPalette = new ColorPaletteComponent(List.of(Color.RED, Color.GREEN, Color.PINK));
         colorPalette.setBounds(700, 220, 200, 32);
         //todo: add actionListener and generate new preview when changing colors
+        this.colorPaletteComponent = colorPalette;
         add(colorPalette);
 
         JPanel divider4 = new JPanel();
@@ -225,6 +228,10 @@ public class EditorPanel extends JPanel {
         field.setActionCommand(labelText);
         panel.add(field);
         return panel;
+    }
+
+    public void setColorPalette(Collection<Color> newColors) {
+        colorPaletteComponent.setColors(newColors);
     }
 
 }
