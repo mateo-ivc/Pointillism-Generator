@@ -6,7 +6,7 @@ import java.util.*;
 import java.util.List;
 
 public class MedianCutColorGenerator {
-    public static List<Color> quantizeImage(BufferedImage image, int n) {
+    public static List<Color> extractColors(BufferedImage image, int n) {
         int width = image.getWidth();
         int height = image.getHeight();
 

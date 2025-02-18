@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PreviewGenerator extends Generator {
+public class PreviewGeneratorImpl extends Generator {
     @Override
     public Template generateTemplate(TemplateConfig config, BufferedImage input) {
 
@@ -24,19 +24,9 @@ public class PreviewGenerator extends Generator {
         //Insegesammte Bild länge in pixel: Format Bildlänge / Pin Distance
         // Scale Faktor:
 
-        int scaledImageWidth = (int)(config.getTemplateWidth() / config.getPinDistance());
-        int scaledImageHeight = (int)(config.getTemplateHeight() / config.getPinDistance());
-        float heightScale = (float) scaledImageHeight / input.getHeight();
-        float widthScale = (float) scaledImageWidth / input.getWidth();
+        BufferedImage scaledInput = scaleImage(config, input);
 
-        BufferedImage scaledInput = new BufferedImage(scaledImageWidth, scaledImageHeight, BufferedImage.TYPE_INT_ARGB);
-        AffineTransform at = new AffineTransform();
-        at.scale(widthScale, heightScale);
-        AffineTransformOp scaleOp =
-                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
-        scaledInput = scaleOp.filter(input, scaledInput);
-
-        List<Color> colorPalette = MedianCutColorGenerator.quantizeImage(scaledInput, 5);
+        List<Color> colorPalette = MedianCutColorGenerator.extractColors(scaledInput, 5);
 
         BufferedImage ditheredImage = FloydSteinbergDitherer.dither(scaledInput, colorPalette);
 
@@ -59,6 +49,21 @@ public class PreviewGenerator extends Generator {
         whole.setPins(pins.toArray(new Pin[]{}));
 
         return template;
+    }
+
+    public static BufferedImage scaleImage(TemplateConfig config, BufferedImage input) {
+        int scaledImageWidth = (int)(config.getTemplateWidth() / config.getPinDistance());
+        int scaledImageHeight = (int)(config.getTemplateHeight() / config.getPinDistance());
+        float heightScale = (float) scaledImageHeight / input.getHeight();
+        float widthScale = (float) scaledImageWidth / input.getWidth();
+
+        BufferedImage scaledInput = new BufferedImage(scaledImageWidth, scaledImageHeight, BufferedImage.TYPE_INT_ARGB);
+        AffineTransform at = new AffineTransform();
+        at.scale(widthScale, heightScale);
+        AffineTransformOp scaleOp =
+                new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+        scaledInput = scaleOp.filter(input, scaledInput);
+        return scaledInput;
     }
 
 

@@ -68,6 +68,8 @@ public class Controller implements ActionListener, Observer {
             case "REVERT_TO_IMAGE_SELECTION":
                 StateMachineFacade.FACTORY.stateMachine().setState(State.S.SELECT_IMAGE);
                 break;
+            case "PRINT_TEMPLATE":
+                CreatorFacade.FACTORY.generator().savePrintableDocument(DomainFacade.FACTORY.configService().getCurrentConfig(), image);
             // Add cases for other actions
             default:
                 break;

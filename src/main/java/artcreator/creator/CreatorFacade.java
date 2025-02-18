@@ -12,6 +12,7 @@ import artcreator.statemachine.port.StateMachine;
 import artcreator.statemachine.port.State.S;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -23,7 +24,7 @@ public class CreatorFacade implements CreatorFactory, Creator, IGenerator, IImag
     private CreatorImpl creator;
     private StateMachine stateMachine;
 
-    private PreviewGenerator previewGenerator;
+    private PreviewGeneratorImpl previewGenerator;
 
     private TemplateGenerator templateGenerator;
 
@@ -49,25 +50,42 @@ public class CreatorFacade implements CreatorFactory, Creator, IGenerator, IImag
     }
 
     @Override
-    public Template generatePrintableDocument(TemplateConfig config, BufferedImage input) {
-        return templateGenerator.generateTemplate(config, input);
+    public void savePrintableDocument(TemplateConfig config, BufferedImage input) {
+        BufferedImage bufferedImage = templateGenerator.generateTemplateImage(config, input);
+
+        JFrame parentFrame = new JFrame();
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Specify a file to save");
+
+        int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+            try {
+                ImageIO.write(bufferedImage, "jpg", fileToSave);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+        }
     }
 
     @Override
     public BufferedImage generatePreview(TemplateConfig config, BufferedImage input) {
-        return new PreviewImageGenerator().generatePreviewFromTemplate(previewGenerator.generateTemplate(config, input));
+        return new PreviewImageGeneratorImpl().generatePreviewFromTemplate(previewGenerator.generateTemplate(config, input));
     }
 
     @Override
     public List<Color> quantizeImage(BufferedImage image, int n) {
-        return new MedianCutColorGenerator().quantizeImage(image, n);
+        return MedianCutColorGenerator.extractColors(image, n);
     }
 
     private CreatorFacade init() {
         if (this.creator == null) {
             this.stateMachine = StateMachineFactory.FACTORY.stateMachine();
             this.creator = new CreatorImpl(stateMachine, DomainFactory.FACTORY.domain());
-            this.previewGenerator = new PreviewGenerator();
+            this.previewGenerator = new PreviewGeneratorImpl();
             this.templateGenerator = new TemplateGenerator();
         }
         return this;

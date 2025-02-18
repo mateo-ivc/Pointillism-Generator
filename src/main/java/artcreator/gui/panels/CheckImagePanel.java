@@ -74,6 +74,8 @@ public class CheckImagePanel extends JPanel {
         JButton template = new JButton("Vorlage");
         template.setBounds(500, 320, 200, 32);
         template.setFont(new Font("Arial", Font.BOLD, 20));
+        template.setActionCommand("PRINT_TEMPLATE");
+        template.addActionListener(controller);
         add(template);
 
     }

@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 
 public interface IGenerator {
-    Template generatePrintableDocument(TemplateConfig config, BufferedImage input);
+    void savePrintableDocument(TemplateConfig config, BufferedImage input);
 
     BufferedImage generatePreview(TemplateConfig config, BufferedImage input);
     List<Color> quantizeImage(BufferedImage image, int n);
