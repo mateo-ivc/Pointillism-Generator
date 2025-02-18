@@ -8,11 +8,11 @@ public class TemplateConfig {
 
     // pinDiameter und pinDistance kann man doch auch im Template selbst speichern?
     private float pinDiameter = 2;
-    private float pinDistance = 10;
+    private float pinDistance = 5;
     private ColorPalette colorPalette = new ColorPalette();
     private PaperFormatEnum partialTemplateFormat = PaperFormatEnum.A4;
-    private float templateHeight = 1000;
-    private float templateWidth = 1000;
+    private float templateHeight = 297;
+    private float templateWidth = 210;
 
     private boolean mirrored;
 
